@@ -4,8 +4,10 @@
 
 double DoIt (int TypeWork, double OperandA, double OperandB, int& ErrorCode)
 {
+    // результат вычисления
     double result = std::numeric_limits<double>::quiet_NaN();
 
+    // неподдерживаемый индекс
     if ( TypeWork > 3 || TypeWork < 0)
     {
         ErrorCode = 1;
@@ -17,16 +19,24 @@ double DoIt (int TypeWork, double OperandA, double OperandB, int& ErrorCode)
         {
             if (TypeWork == 0)
             {
+                // сложение
                 ErrorCode = 0;
                 result = OperandA + OperandB;
             }
             else if (TypeWork == 1)
             {
+                // вычитание
                 ErrorCode = 0;
                 result = OperandA - OperandB;
             }
             else if (TypeWork == 2)
             {
+                // деление
+
+                // заведо ложное условие, т.к. вещественные числа с нулем не сравнимы
+                // if ( OperandB == 0.0) { ErrorCode = 2; }
+
+                // попытка сравнения с малым числом, близким к нулю
                 if ( fabs (OperandB) < DBL_EPSILON )
                 {
                     ErrorCode = 2;
@@ -39,6 +49,7 @@ double DoIt (int TypeWork, double OperandA, double OperandB, int& ErrorCode)
             }
             else if (TypeWork == 3)
             {
+                // перемножение
                 ErrorCode = 0;
                 result = OperandA * OperandB;
             }
